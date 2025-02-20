@@ -20,6 +20,7 @@ public class List {
         }
         else{
             Node aux = this.first;
+
             while(aux.GetNext() != null){
                 aux = aux.GetNext();
             }
