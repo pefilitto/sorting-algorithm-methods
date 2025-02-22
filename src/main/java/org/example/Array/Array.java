@@ -36,4 +36,41 @@ public class Array {
             array[j] = elem;
         }
     }
+
+    public void CountingSort() {
+        int[] countingArray, outputArray;
+        int maior = 0, cont;
+
+        for(int i = 0; i < TL; i++){
+            if(array[i] > maior)
+                maior = array[i];
+        }
+
+        countingArray = new int[maior + 1];
+
+        for(int i = 0; i < TL; i++){
+            cont = 0;
+            for (int j = 0; j < TL; j++) {
+                if(array[i] == array[j])
+                    cont++;
+            }
+            countingArray[array[i]] = cont;
+        }
+
+        for(int i = 1; i <= maior; i++){
+            countingArray[i] = countingArray[i] + countingArray[i - 1];
+        }
+
+        outputArray = new int[TL];
+
+        for(int i = TL - 1; i >= 0; i--){
+            outputArray[countingArray[array[i]] - 1] = array[i];
+            countingArray[array[i]]--;
+        }
+
+        array = outputArray;
+    }
+
+
+
 }

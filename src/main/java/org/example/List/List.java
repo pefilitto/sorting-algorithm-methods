@@ -38,4 +38,20 @@ public class List {
         }
         System.out.println(aux.GetData());
     }
+
+    public void InsertionSort(){
+        Node node, aux;
+
+        node = first.GetNext();
+        while(node != null){
+            aux = node;
+
+            while(aux.GetPrev() != first && aux.GetData() < aux.GetPrev().GetData()){
+                aux.SetData(aux.GetPrev().GetData());
+                aux = aux.GetPrev();
+            }
+
+            node = node.GetNext();
+        }
+    }
 }
