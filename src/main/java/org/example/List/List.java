@@ -26,6 +26,7 @@ public class List {
             }
 
             aux.SetNext(newElement);
+            newElement.SetPrev(aux);
         }
     }
 
@@ -46,11 +47,12 @@ public class List {
         while(node != null){
             aux = node;
 
-            while(aux.GetPrev() != first && aux.GetData() < aux.GetPrev().GetData()){
+            while(aux != first && node.GetData() < aux.GetPrev().GetData()){
                 aux.SetData(aux.GetPrev().GetData());
                 aux = aux.GetPrev();
             }
 
+            aux.SetData(node.GetData());
             node = node.GetNext();
         }
     }
