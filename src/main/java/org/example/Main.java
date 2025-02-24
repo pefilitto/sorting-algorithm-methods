@@ -13,7 +13,7 @@ public class Main {
         for (int i = 0; i < 11; i++) {
             Random random = new Random();
 
-            list.AddElement(random.nextInt(10));
+            list.AddElement(random.nextInt(50));
             array.AddElement(random.nextInt(10));
         }
 
@@ -21,7 +21,7 @@ public class Main {
         list.PrintList();
 
         System.out.println("Depois da ordenacao");
-        list.InsertionSort();
+        list.CountingSort();
         list.PrintList();
         //list.PrintList();
     }
