@@ -33,27 +33,50 @@ public class List {
     public void PrintList(){
         Node aux = this.first;
         while(aux.GetNext() != null){
-            System.out.println(aux.GetData());
+            System.out.print(aux.GetData() + " ");
 
             aux = aux.GetNext();
         }
-        System.out.println(aux.GetData());
+        System.out.print(aux.GetData());
+        System.out.println();
     }
 
     public void InsertionSort(){
-        Node node, aux;
+        Node noPos, atual = first.GetNext();
+        int elem;
 
-        node = first.GetNext();
-        while(node != null){
-            aux = node;
+        while (atual != null) {
+            noPos = atual;
+            elem = noPos.GetData();
 
-            while(aux != first && node.GetData() < aux.GetPrev().GetData()){
-                aux.SetData(aux.GetPrev().GetData());
-                aux = aux.GetPrev();
+            while(noPos != first && elem < noPos.GetPrev().GetData()) {
+                noPos.SetData(noPos.GetPrev().GetData());
+                noPos = noPos.GetPrev();
             }
 
-            aux.SetData(node.GetData());
-            node = node.GetNext();
+            noPos.SetData(elem);
+            atual = atual.GetNext();
+        }
+    }
+
+    public void Selection_Sort() {
+        Node current = first, smaller, auxCurrent;
+        int auxInfo;
+
+        while (current != null) {
+            smaller = current;
+
+            auxCurrent = current;
+            while(auxCurrent != null) {
+                if (auxCurrent.GetData() < smaller.GetData())
+                    smaller = auxCurrent;
+                auxCurrent = auxCurrent.GetNext();
+            }
+
+            auxInfo = current.GetData();
+            current.SetData(smaller.GetData());
+            smaller.SetData(auxInfo);
+            current = current.GetNext();
         }
     }
 }

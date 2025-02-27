@@ -22,18 +22,35 @@ public class Array {
     }
 
     public void InsertionSort(){
-        int inicio = 0, elem, j;
+       int elem, pos;
 
-        for (int i = 1; i < TL; i++) {
-            elem = array[i];
-            j = i;
+       for (int i = 1; i < TL; i++) {
+           pos = i;
+           elem = array[pos];
 
-            while(j > inicio && elem < array[j - 1]){
-                array[j] = array[j - 1];
-                j--;
+           while(pos > 0 && elem < array[pos - 1]) {
+               array[pos] = array[pos - 1];
+               pos--;
+           }
+
+           array[pos] = elem;
+       }
+    }
+
+    public void Selection_Sort() {
+        int posMenor, aux;
+
+        for (int i = 0; i < TL; i++) {
+            posMenor = i;
+
+            for (int j = i; j < TL; j++) {
+                if (array[j] < array[posMenor])
+                    posMenor = j;
             }
 
-            array[j] = elem;
+            aux = array[posMenor];
+            array[posMenor] = array[i];
+            array[i] = aux;
         }
     }
 

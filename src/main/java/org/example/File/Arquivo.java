@@ -1,16 +1,7 @@
-package org.example.Arquivo;
+package org.example.File;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Random;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Random;
 
 public class Arquivo {
@@ -90,6 +81,8 @@ public class Arquivo {
             aux.exibirReg();
             i++;
         }
+
+        System.out.println();
     }
 
     public void exibirUmRegistro(int pos) {
@@ -155,4 +148,68 @@ public class Arquivo {
     insira aqui os m�todos de Ordena��o;
 
     */
+
+    public void Insertion_Sort() {
+        Registro regAnt = new Registro();
+        Registro regAux = new Registro();
+
+        int i = 1, pos;
+        int tam = filesize();
+
+        while(i < tam) {
+            pos = i;
+            seekArq(pos - 1);
+            regAnt.leDoArq(arquivo);
+            regAux.leDoArq(arquivo);
+
+            while(pos > 0 && regAux.getNumero() < regAnt.getNumero()) {
+                seekArq(pos);
+                regAnt.gravaNoArq(arquivo);
+                pos--;
+                if (pos > 0) {
+                    seekArq(pos - 1);
+                    regAnt.leDoArq(arquivo);
+                }
+            }
+
+            seekArq(pos);
+            regAux.gravaNoArq(arquivo);
+            i++;
+        }
+    }
+
+    public void Selection_Sort() {
+        Registro atual = new Registro();
+        Registro menor = new Registro();
+        Registro aux = new Registro();
+        int i = 0, tam = filesize(), posMenor;
+
+        while(i < tam) {
+            seekArq(i);
+            atual.leDoArq(arquivo);
+            seekArq(i);
+            menor.leDoArq(arquivo);
+            posMenor = i;
+
+            for (int j = i+1; j < tam; j++) {
+
+                aux.leDoArq(arquivo);
+
+                if (aux.getNumero() < menor.getNumero()) {
+                    posMenor = j;
+                    seekArq(j);
+                    menor.leDoArq(arquivo);
+                }
+            }
+
+            if (menor != atual) {
+                seekArq(i);
+                menor.gravaNoArq(arquivo);
+                seekArq(posMenor);
+                atual.gravaNoArq(arquivo);
+            }
+
+            i++;
+        }
+    }
 }

@@ -1,18 +1,18 @@
-package org.example.Arquivo;
+package org.example.File;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
 class Registro
 {
-    public final int tf=1022;
+    public final int tf=0;
     private int numero; //4 bytes
     private char lixo[] = new char[tf]; //2044 bytes
     public Registro(int numero)
     {
         this.numero=numero;
-        for (int i=0 ; i<tf ; i++)
-            lixo[i]='X';
+        /*for (int i=0 ; i<tf ; i++)
+            lixo[i]='X';*/
     }
 
     public int getNumero() {
@@ -52,7 +52,7 @@ class Registro
     }
 
     public void exibirReg() {
-        System.out.println("Código: " + numero);
+        System.out.print(numero + " ");
     }
     static int length()
     {
@@ -60,6 +60,6 @@ class Registro
         //char lixo[] = new char[tf]; 2044 bytes
         //--------------------------------------
         // 2048 bytes
-        return(2048);
+        return(4);
     }
 }
