@@ -18,11 +18,13 @@ public class Main {
         }
 
         System.out.println("Antes da Ordenacao");
+        //array.PrintArray();
         list.PrintList();
 
         System.out.println("Depois da ordenacao");
-        list.CountingSort();
+        //array.HeapSort();
+        //array.PrintArray();
+        list.HeapSort();
         list.PrintList();
-        //list.PrintList();
     }
 }
