@@ -21,7 +21,7 @@ public class Main {
         list.PrintList();
 
         System.out.println("Depois da ordenacao");
-        list.CountingSort();
+        list.Radix_Sort();
         list.PrintList();
         //list.PrintList();
     }
