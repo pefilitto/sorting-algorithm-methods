@@ -71,11 +71,11 @@ public class List {
     public void PrintList(){
         Node aux = this.first;
         while(aux.GetNext() != null){
-            System.out.println(aux.GetData());
+            System.out.print(aux.GetData() + " ");
 
             aux = aux.GetNext();
         }
-        System.out.println(aux.GetData());
+        System.out.print(aux.GetData() + " ");
     }
 
     public void InsertionSort(){
@@ -132,11 +132,12 @@ public class List {
     }
 
     public void BubbleSort() {
+        Node auxLast = last;
         int aux;
         boolean changed = true;
-        while (changed) {
+        while (auxLast != first && changed) {
             changed = false;
-            for (Node j = first; j.GetNext() != null; j = j.GetNext()) {
+            for (Node j = first; j != auxLast; j = j.GetNext()) {
                 if (j.GetData() > j.GetNext().GetData()) {
                     aux = j.GetData();
                     j.SetData(j.GetNext().GetData());
@@ -144,6 +145,7 @@ public class List {
                     changed = true;
                 }
             }
+            auxLast = auxLast.GetPrev();
         }
     }
 
@@ -210,7 +212,7 @@ public class List {
         }
     }
 
-    public void Radix_Sort() {
+    public void RadixSort() {
         Node maxNode = GetMax();
 
         for (int exp = 1; maxNode.GetData() / exp > 0; exp *= 10) {
@@ -218,7 +220,7 @@ public class List {
         }
     }
 
-    public void Gnome_Sort(){
+    public void GnomeSort(){
         Node aux = first;
 
         while(aux != null){
