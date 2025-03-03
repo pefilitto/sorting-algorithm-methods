@@ -95,6 +95,32 @@ public class List {
         }
     }
 
+    public void SelectionSort(){
+        Node actual = first, minimum, aux;
+
+        while(actual != null){
+            minimum = actual;
+
+            aux = minimum.GetNext();
+            while(aux != null){
+                if(aux.GetData() < minimum.GetData()){
+                    minimum = aux;
+                }
+                aux = aux.GetNext();
+            }
+
+            int auxInfo = minimum.GetData();
+            minimum.SetData(actual.GetData());
+            actual.SetData(auxInfo);
+
+            actual = actual.GetNext();
+        }
+    }
+
+    public void ShakeSort(){
+
+    }
+
     public void CountingSort(){
         int higher = 0, cont = 0;
         Node aux = first;
@@ -179,7 +205,6 @@ public class List {
             TL--;
         }
     }
-
 
     public void CountingSortToRadix(int exp) {
         int size = SizeList();

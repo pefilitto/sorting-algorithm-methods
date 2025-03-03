@@ -52,7 +52,7 @@ class Registro
     }
 
     public void exibirReg() {
-        System.out.println("Código: " + numero);
+        System.out.print(numero + " ");
     }
     static int length()
     {

@@ -1,5 +1,6 @@
 package org.example.Arquivo;
 
+import java.awt.image.renderable.RenderableImage;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Files;
@@ -90,6 +91,7 @@ public class Arquivo {
             aux.exibirReg();
             i++;
         }
+        System.out.println();
     }
 
     public void exibirUmRegistro(int pos) {
@@ -149,10 +151,31 @@ public class Arquivo {
 
         }
     }
-//.............................................................................
-    /*
 
-    insira aqui os m�todos de Ordena��o;
+    public void InsertionSort(){
+        Registro actual = new Registro();
+        Registro prev = new Registro();
+        int i = 1, pos;
 
-    */
+        while(i < filesize()){
+            pos = i;
+            seekArq(pos - 1);
+            prev.leDoArq(arquivo);
+            actual.leDoArq(arquivo);
+
+            while(pos > 0 && actual.getNumero() < prev.getNumero()) {
+                seekArq(pos);
+                prev.gravaNoArq(arquivo);
+                pos--;
+
+                if (pos > 0) {
+                    seekArq(pos - 1);
+                    prev.leDoArq(arquivo);
+                }
+            }
+            seekArq(pos);
+            actual.gravaNoArq(arquivo);
+            i++;
+        }
+    }
 }
