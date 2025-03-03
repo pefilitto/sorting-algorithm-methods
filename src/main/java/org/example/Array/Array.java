@@ -71,6 +71,34 @@ public class Array {
         array = outputArray;
     }
 
+    public void HeapSort() {
+        int childLeft, childRight, father, TL2 = TL, higherPos, aux;
 
+        while (TL2 > 1) {
+            father = TL2 / 2 - 1;
+
+            while (father >= 0) {
+                childLeft = father * 2 + 1;
+                childRight = childLeft + 1;
+                higherPos = childLeft;
+
+                if (childRight < TL2 && array[childRight] > array[childLeft])
+                    higherPos = childRight;
+
+                if (array[higherPos] > array[father]) {
+                    aux = array[higherPos];
+                    array[higherPos] = array[father];
+                    array[father] = aux;
+                }
+
+                father--;
+            }
+
+            aux = array[0];
+            array[0] = array[TL2 - 1];
+            array[TL2 - 1] = aux;
+            TL2--;
+        }
+    }
 
 }

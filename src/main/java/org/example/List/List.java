@@ -40,6 +40,16 @@ public class List {
         return maxNode;
     }
 
+    private Node NodeByPos(int position){
+        Node node = first;
+        int cont = 0;
+        while(node != null && cont < position){
+            node = node.GetNext();
+            cont++;
+        }
+        return node;
+    }
+
     public void AddElement(int element){
         Node newElement = new Node(element);
         if(IsEmpty()){
@@ -120,6 +130,54 @@ public class List {
             aux.SetData(outputArray[i]);
         }
     }
+
+    public void BubbleSort() {
+        int aux;
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            for (Node j = first; j.GetNext() != null; j = j.GetNext()) {
+                if (j.GetData() > j.GetNext().GetData()) {
+                    aux = j.GetData();
+                    j.SetData(j.GetNext().GetData());
+                    j.GetNext().SetData(aux);
+                    changed = true;
+                }
+            }
+        }
+    }
+
+    public void HeapSort() {
+        int TL = SizeList(), childLeft, childRight, higherPos, father;
+
+        while (TL > 1) {
+            father = TL / 2 - 1;
+
+            while (father >= 0) {
+                childLeft = father * 2 + 1;
+                childRight = childLeft + 1;
+                higherPos = childLeft;
+
+                if (childRight < TL && NodeByPos(childRight).GetData() > NodeByPos(higherPos).GetData())
+                    higherPos = childRight;
+
+                if (NodeByPos(higherPos).GetData() > NodeByPos(father).GetData()) {
+                    int aux = NodeByPos(higherPos).GetData();
+                    NodeByPos(higherPos).SetData(NodeByPos(father).GetData());
+                    NodeByPos(father).SetData(aux);
+                }
+
+                father--;
+            }
+
+            int aux = NodeByPos(0).GetData();
+            NodeByPos(0).SetData(NodeByPos(TL - 1).GetData());
+            NodeByPos(TL - 1).SetData(aux);
+
+            TL--;
+        }
+    }
+
 
     public void CountingSortToRadix(int exp) {
         int size = SizeList();

@@ -18,11 +18,11 @@ public class Main {
         }
 
         System.out.println("Antes da Ordenacao");
+        //array.PrintArray();
         list.PrintList();
 
         System.out.println("Depois da ordenacao");
         list.Radix_Sort();
         list.PrintList();
-        //list.PrintList();
     }
 }
