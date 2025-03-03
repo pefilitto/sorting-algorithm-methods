@@ -14,7 +14,7 @@ public class Main {
         int tam = 5;
 
 
-       /* Array array = new Array(11);
+        Array array = new Array(11);
         List list = new List();
 
         for (int i = 0; i < 11; i++) {
@@ -28,12 +28,12 @@ public class Main {
         list.PrintList();
 
         System.out.println("Depois da ordenacao");
-        list.Selection_Sort();
+        list.Radix_Sort();
         list.PrintList();
         //list.PrintList();*/
 
         Report report = new Report();
-        report.generateFiles();
+        //report.generateFiles();
 
        //arqOrd = new Arquivo("ArquivoOrdenado.dat");
 

@@ -133,6 +133,7 @@ public class Arquivo {
             this.arquivo = new RandomAccessFile("temp.dat", "rw");
             truncate(0);
             arquivoOrigem.seek(0);
+
             while (i < tam) {
                 reg.leDoArq(arquivoOrigem);
                 reg.gravaNoArq(arquivo);

@@ -13,6 +13,34 @@ public class List {
         return this.first == null && this.last == null;
     }
 
+    private Node GetMax() {
+        if (first == null) return null;
+
+        Node maxNode = first;
+        Node aux = first;
+
+        while (aux != null) {
+            if (aux.GetData() > maxNode.GetData()) {
+                maxNode = aux;
+            }
+            aux = aux.GetNext();
+        }
+        return maxNode;
+    }
+
+
+    private int SizeList(){
+        int cont = 0;
+        Node aux = first;
+        while(aux != null){
+            cont++;
+
+            aux = aux.GetNext();
+        }
+
+        return cont;
+    }
+
     public void AddElement(int element){
         Node newElement = new Node(element);
         if(IsEmpty()){
@@ -79,4 +107,45 @@ public class List {
             current = current.GetNext();
         }
     }
+
+    public void CountingSortToRadix(int exp) {
+        int size = SizeList();
+
+        int[] countingArray = new int[10];
+        int[] outputArray = new int[size];
+
+        Node aux = first;
+        while (aux != null) {
+            int digit = (aux.GetData() / exp) % 10;
+            countingArray[digit]++;
+            aux = aux.GetNext();
+        }
+
+        for (int i = 1; i < 10; i++) {
+            countingArray[i] += countingArray[i - 1];
+        }
+
+        aux = last;
+        while (aux != null) {
+            int digit = (aux.GetData() / exp) % 10;
+            outputArray[countingArray[digit] - 1] = aux.GetData();
+            countingArray[digit]--;
+            aux = aux.GetPrev();
+        }
+
+        aux = first;
+        for (int i = 0; i < size && aux != null; i++, aux = aux.GetNext()) {
+            aux.SetData(outputArray[i]);
+        }
+    }
+
+    public void Radix_Sort() {
+        Node maxNode = GetMax();
+        if (maxNode == null) return;
+
+        for (int exp = 1; maxNode.GetData() / exp > 0; exp *= 10) {
+            CountingSortToRadix(exp);
+        }
+    }
+
 }
