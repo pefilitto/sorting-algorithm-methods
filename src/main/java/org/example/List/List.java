@@ -55,6 +55,7 @@ public class List {
 
             aux.SetNext(newElement);
             newElement.SetPrev(aux);
+            last = newElement;
         }
     }
 
@@ -141,11 +142,9 @@ public class List {
 
     public void Radix_Sort() {
         Node maxNode = GetMax();
-        if (maxNode == null) return;
 
         for (int exp = 1; maxNode.GetData() / exp > 0; exp *= 10) {
             CountingSortToRadix(exp);
         }
     }
-
 }
