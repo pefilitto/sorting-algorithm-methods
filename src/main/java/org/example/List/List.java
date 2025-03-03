@@ -28,6 +28,23 @@ public class List {
         return maxNode;
     }
 
+    private Node GetNodeByPos(int index){
+        Node aux = first;
+        int cont = 0;
+        while(aux.GetNext() != null && cont < index){
+            aux = aux.GetNext();
+            cont++;
+        }
+        return aux;
+    }
+
+    private void StartList0(int sizeList){
+        int cont = 0;
+        while(cont < sizeList){
+            AddElement(0);
+            cont++;
+        }
+    }
 
     private int SizeList(){
         int cont = 0;
@@ -44,10 +61,10 @@ public class List {
     public void AddElement(int element){
         Node newElement = new Node(element);
         if(IsEmpty()){
-            this.first = this.last = newElement;
+            first = last = newElement;
         }
         else{
-            Node aux = this.first;
+            Node aux = first;
 
             while(aux.GetNext() != null){
                 aux = aux.GetNext();
@@ -60,7 +77,7 @@ public class List {
     }
 
     public void PrintList(){
-        Node aux = this.first;
+        Node aux = first;
         while(aux.GetNext() != null){
             System.out.print(aux.GetData() + " ");
 
@@ -145,6 +162,23 @@ public class List {
 
         for (int exp = 1; maxNode.GetData() / exp > 0; exp *= 10) {
             CountingSortToRadix(exp);
+        }
+    }
+
+    public void Gnome_Sort(){
+        Node aux = first;
+
+        while(aux != null){
+            if(aux == first){
+                aux = aux.GetNext();
+            }
+            else if(aux.GetData() < aux.GetPrev().GetData()){
+                int auxData = aux.GetData();
+                aux.SetData(aux.GetPrev().GetData());
+                aux.GetPrev().SetData(auxData);
+                aux = aux.GetPrev();
+            }
+            else aux = aux.GetNext();
         }
     }
 }

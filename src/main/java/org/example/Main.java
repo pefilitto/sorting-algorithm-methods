@@ -20,7 +20,7 @@ public class Main {
         for (int i = 0; i < 11; i++) {
             Random random = new Random();
 
-            list.AddElement(random.nextInt(10));
+            list.AddElement(random.nextInt(300));
             array.AddElement(random.nextInt(10));
         }
 
@@ -28,11 +28,11 @@ public class Main {
         list.PrintList();
 
         System.out.println("Depois da ordenacao");
-        list.Radix_Sort();
+        list.Gnome_Sort();
         list.PrintList();
         //list.PrintList();*/
 
-        Report report = new Report();
+        //Report report = new Report();
         //report.generateFiles();
 
        //arqOrd = new Arquivo("ArquivoOrdenado.dat");
