@@ -178,4 +178,38 @@ public class Arquivo {
             i++;
         }
     }
+
+    public void SelectionSort() {
+        int minimumPos = 0, i = 0, j;
+        Registro minimumPosRegister = new Registro(), actualJ = new Registro(), actualI =  new Registro();
+
+        while(i < filesize()){
+            j = i + 1;
+            seekArq(i);
+            actualI.leDoArq(arquivo);
+            seekArq(i);
+            minimumPosRegister.leDoArq(arquivo);
+            minimumPos = i;
+
+
+
+            while(j < filesize()){
+                seekArq(j);
+                actualJ.leDoArq(arquivo);
+
+                if(actualJ.getNumero() < minimumPosRegister.getNumero()){
+                    seekArq(j);
+                    minimumPosRegister.leDoArq(arquivo);
+                    minimumPos = j;
+                }
+                j++;
+            }
+
+            seekArq(i);
+            minimumPosRegister.gravaNoArq(arquivo);
+            seekArq(minimumPos);
+            actualI.gravaNoArq(arquivo);
+            i++;
+        }
+    }
 }
