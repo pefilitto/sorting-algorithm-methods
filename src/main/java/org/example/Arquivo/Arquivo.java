@@ -191,8 +191,6 @@ public class Arquivo {
             minimumPosRegister.leDoArq(arquivo);
             minimumPos = i;
 
-
-
             while(j < filesize()){
                 seekArq(j);
                 actualJ.leDoArq(arquivo);
@@ -212,4 +210,48 @@ public class Arquivo {
             i++;
         }
     }
+
+    public void CountingSort() {
+        int max = 0;
+        int i = 0;
+        int size = filesize();
+
+        int[] outputArray = new int[size];
+
+        seekArq(0);
+        Registro aux = new Registro();
+        aux.leDoArq(arquivo);
+        while (!eof()) {
+            if (aux.getNumero() > max)
+                max = aux.getNumero();
+            aux.leDoArq(arquivo);
+        }
+
+        int[] countingArray = new int[max + 1];
+
+        seekArq(0);
+        for (i = 0; i < size; i++) {
+            aux.leDoArq(arquivo);
+            countingArray[aux.getNumero()]++;
+        }
+
+        for (i = 1; i <= max; i++) {
+            countingArray[i] += countingArray[i - 1];
+        }
+
+        seekArq(size - 1);
+        for (i = size - 1; i >= 0; i--) {
+            aux.leDoArq(arquivo);
+            outputArray[countingArray[aux.getNumero()] - 1] = aux.getNumero();
+            countingArray[aux.getNumero()]--;
+            seekArq(i - 1);
+        }
+
+        seekArq(0);
+        for (i = 0; i < size; i++) {
+            aux.setNumero(outputArray[i]);
+            aux.gravaNoArq(arquivo);
+        }
+    }
+
 }
