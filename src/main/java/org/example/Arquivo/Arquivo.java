@@ -254,4 +254,68 @@ public class Arquivo {
         }
     }
 
+    public void BubbleSort(){
+        int i = 0, filesize = filesize();
+        boolean changed = true;
+        Registro actual = new Registro();
+        Registro next = new Registro();
+        while(filesize > 1 && changed){
+            changed = false;
+            for (i = 0; i < filesize - 1; i++) {
+                seekArq(i);
+                actual.leDoArq(arquivo);
+                next.leDoArq(arquivo);
+                if(actual.getNumero() > next.getNumero()){
+                    seekArq(i);
+                    next.gravaNoArq(arquivo);
+                    actual.gravaNoArq(arquivo);
+                    changed = true;
+                }
+            }
+            filesize--;
+        }
+    }
+
+    public void ShakeSort(){
+        boolean changed = true;
+        int filesize = filesize(), start = 0;
+        Registro actual = new Registro();
+        Registro next = new Registro();
+        Registro prev = new Registro();
+        while(start != filesize && changed){
+            changed = false;
+
+            for (int i = 0; i < filesize - 1; i++) {
+                seekArq(i);
+                actual.leDoArq(arquivo);
+                next.leDoArq(arquivo);
+                if(actual.getNumero() > next.getNumero()){
+                    seekArq(i);
+                    next.gravaNoArq(arquivo);
+                    actual.gravaNoArq(arquivo);
+                    changed = true;
+                }
+            }
+
+            filesize--;
+
+            if(changed){
+                changed = false;
+                for (int i = filesize; i > start; i--) {
+                    seekArq(i);
+                    actual.leDoArq(arquivo);
+                    seekArq(i - 1);
+                    prev.leDoArq(arquivo);
+                    if(actual.getNumero() < prev.getNumero()){
+                        seekArq(i);
+                        prev.gravaNoArq(arquivo);
+                        seekArq(i - 1);
+                        actual.gravaNoArq(arquivo);
+                        changed = true;
+                    }
+                }
+                start++;
+            }
+        }
+    }
 }

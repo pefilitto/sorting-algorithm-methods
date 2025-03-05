@@ -11,14 +11,14 @@ public class Main {
         Array array = new Array(11);
         List list = new List();
 
-      /*  for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 11; i++) {
             Random random = new Random();
 
             list.AddElement(random.nextInt(50));
             array.AddElement(random.nextInt(10));
         }
 
-        System.out.println("Antes da Ordenacao");
+        //System.out.println("Antes da Ordenacao");
         //array.PrintArray();
         //list.PrintList();
 
@@ -26,8 +26,8 @@ public class Main {
         System.out.println();
 
         //System.out.println("Depois da ordenacao");
-        //list.SelectionSort();
-        //list.PrintList();*/
+        //list.ShakeSort();
+        //list.PrintList();
 
         Report report = new Report();
         report.generateFiles();
