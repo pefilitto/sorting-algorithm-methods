@@ -118,7 +118,38 @@ public class List {
     }
 
     public void ShakeSort(){
+        boolean changed = true;
+        Node aux = first, auxFirst = first, auxLast = last;
+        while(auxFirst != auxLast && changed){
+            changed = false;
 
+            while(aux.GetNext() != null){
+                if(aux.GetData() > aux.GetNext().GetData()){
+                    int auxInfo = aux.GetData();
+                    aux.SetData(aux.GetNext().GetData());
+                    aux.GetNext().SetData(auxInfo);
+                    changed = true;
+                }
+                aux = aux.GetNext();
+            }
+
+            auxLast = auxLast.GetPrev();
+
+            if(changed){
+                changed = false;
+                aux = last;
+                while(aux.GetPrev() != null){
+                    if(aux.GetData() < aux.GetPrev().GetData()){
+                        int auxInfo = aux.GetData();
+                        aux.SetData(aux.GetPrev().GetData());
+                        aux.GetPrev().SetData(auxInfo);
+                        changed = true;
+                    }
+                    aux = aux.GetPrev();
+                }
+                auxFirst = auxFirst.GetNext();
+            }
+        }
     }
 
     public void CountingSort(){

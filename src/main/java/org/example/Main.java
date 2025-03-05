@@ -18,18 +18,18 @@ public class Main {
             array.AddElement(random.nextInt(10));
         }
 
-        //System.out.println("Antes da Ordenacao");
+        System.out.println("Antes da Ordenacao");
         //array.PrintArray();
-        //list.PrintList();
+        list.PrintList();
 
 
         System.out.println();
 
-        //System.out.println("Depois da ordenacao");
-        //list.ShakeSort();
-        //list.PrintList();
+        System.out.println("Depois da ordenacao");
+        list.ShakeSort();
+        list.PrintList();
 
         Report report = new Report();
-        report.generateFiles();
+        //report.generateFiles();
     }
 }
