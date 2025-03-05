@@ -318,4 +318,32 @@ public class Arquivo {
             }
         }
     }
+
+    public void GnomeSort(){
+        int i = 0, filesize = filesize();
+        Registro actual = new Registro();
+        Registro prev = new Registro();
+        while(i < filesize) {
+            if(i == 0){
+                i++;
+            }
+            else{
+                seekArq(i);
+                actual.leDoArq(arquivo);
+                seekArq(i - 1);
+                prev.leDoArq(arquivo);
+
+                if(actual.getNumero() < prev.getNumero()){
+                    seekArq(i);
+                    prev.gravaNoArq(arquivo);
+                    seekArq(i - 1);
+                    actual.gravaNoArq(arquivo);
+                    i--;
+                }
+                else{
+                    i++;
+                }
+            }
+        }
+    }
 }
