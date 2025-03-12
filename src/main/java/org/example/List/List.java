@@ -154,17 +154,13 @@ public class List {
 
     public void CountingSort(){
         int higher = 0, cont = 0;
+        int[] countingArray = new int[0], outputArray = new int[SizeList()];
         Node aux = first;
 
-        while(aux != null){
-            if(aux.GetData() > higher)
-                higher = aux.GetData();
-
-            aux = aux.GetNext();
+        Node max = GetMax();
+        if(max != null){
+            countingArray = new int[max.GetData() + 1];
         }
-
-        int[] countingArray = new int[higher + 1];
-        int[] outputArray = new int[SizeList()];
 
         aux = first;
         while(aux != null){

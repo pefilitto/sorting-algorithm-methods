@@ -16,7 +16,7 @@ public class Report {
         System.out.println("Antes da ordenacao Copia");
         copia.exibirArq();
 
-        copia.GnomeSort();
+        copia.RadixSort();
         System.out.println("Depois da ordenacao");
         copia.exibirArq();
 

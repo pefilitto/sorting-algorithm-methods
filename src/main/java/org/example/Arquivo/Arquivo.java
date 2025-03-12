@@ -152,6 +152,21 @@ public class Arquivo {
         }
     }
 
+    private Registro GetMaxRegister(){
+        int maior = 0;
+        Registro auxMaior = new Registro();
+        Registro aux = new Registro();
+        for (int i = 0; i < filesize(); i++) {
+            seekArq(i);
+            aux.leDoArq(arquivo);
+            if(aux.getNumero()  > maior){
+                maior = aux.getNumero();
+                auxMaior = aux;
+            }
+        }
+        return auxMaior;
+    }
+
     public void InsertionSort(){
         Registro actual = new Registro();
         Registro prev = new Registro();
@@ -344,6 +359,46 @@ public class Arquivo {
                     i++;
                 }
             }
+        }
+    }
+
+    public void CountingSortToRadix(int exp){
+        int filesize = filesize();
+        Registro aux = new Registro();
+        int[] outputArray = new int[filesize];
+        int[] countingArray = new int[10];
+
+        for (int i = 0; i < filesize; i++) {
+            seekArq(i);
+            aux.leDoArq(arquivo);
+            int digit = (aux.getNumero() / exp) % 10;
+            countingArray[digit]++;
+        }
+
+        for (int i = 1; i < 10; i++) {
+            countingArray[i] += countingArray[i-1];
+        }
+
+        for (int i = filesize - 1; i >= 0; i--) {
+            seekArq(i);
+            aux.leDoArq(arquivo);
+            int digit = (aux.getNumero() / exp) % 10;
+            outputArray[countingArray[digit] - 1] = aux.getNumero();
+            countingArray[digit]--;
+        }
+
+        for (int i = 0; i < filesize; i++) {
+            aux.setNumero(outputArray[i]);
+            seekArq(i);
+            aux.gravaNoArq(arquivo);
+        }
+    }
+
+    public void RadixSort(){
+        Registro maxRegister = GetMaxRegister();
+
+        for (int i = 1; maxRegister.getNumero() / i > 0; i *= 10) {
+            CountingSortToRadix(i);
         }
     }
 }
