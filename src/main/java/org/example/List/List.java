@@ -40,6 +40,21 @@ public class List {
         return maxNode;
     }
 
+    private Node GetMin(){
+        if (first == null) return null;
+
+        Node minNode = first;
+        Node aux = first;
+
+        while (aux != null) {
+            if (aux.GetData() < minNode.GetData()) {
+                minNode = aux;
+            }
+            aux = aux.GetNext();
+        }
+        return minNode;
+    }
+
     private Node NodeByPos(int position){
         Node node = first;
         int cont = 0;
@@ -286,6 +301,36 @@ public class List {
                 aux = aux.GetPrev();
             }
             else aux = aux.GetNext();
+        }
+    }
+
+    public void BucketSort(){
+        int sizeList = SizeList();
+        List [] buckets = new List[sizeList];
+
+        for (int i = 0; i < sizeList; i++) {
+            buckets[i] = new List();
+        }
+
+        Node aux = first;
+        while(aux != null){
+            int pos = (aux.GetData() - GetMin().GetData()) * (sizeList - 1) / (GetMax().GetData() - GetMin().GetData());
+            buckets[pos].AddElement(aux.GetData());
+            aux = aux.GetNext();
+        }
+
+        for (int i = 0; i < buckets.length; i++) {
+            buckets[i].SelectionSort();
+        }
+
+        for (int i = 0; i < buckets.length; i++) {
+            Node auxBucket = buckets[i].first;
+            int j = i;
+            while(auxBucket != null){
+                NodeByPos(j).SetData(auxBucket.GetData());
+                auxBucket = auxBucket.GetNext();
+                j++;
+            }
         }
     }
 }

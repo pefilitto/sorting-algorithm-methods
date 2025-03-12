@@ -20,16 +20,16 @@ public class Main {
 
         System.out.println("Antes da Ordenacao");
         //array.PrintArray();
-        //list.PrintList();
+        list.PrintList();
 
 
         System.out.println();
 
         System.out.println("Depois da ordenacao");
-        //list.ShakeSort();
-        //list.PrintList();
+        list.BucketSort();
+        list.PrintList();
 
         Report report = new Report();
-        report.generateFiles();
+        //report.generateFiles();
     }
 }
