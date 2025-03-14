@@ -409,41 +409,37 @@ public class Arquivo {
         }
     }
 
-    public void BucketSort() {
-        Arquivo[] buckets = new Arquivo[filesize()];
+    public void BucketSort(int quantFiles) {
+        Arquivo[] buckets = new Arquivo[quantFiles];
         Registro aux = new Registro();
         Registro max = GetMaxRegister();
         Registro min = GetMinRegister();
         int range = max.getNumero() - min.getNumero();
 
-        for (int i = 0; i < filesize(); i++) {
+        for (int i = 0; i < quantFiles; i++) {
             buckets[i] = new Arquivo(i + ".dat");
             buckets[i].truncate(0);
         }
 
-        for (int i = 0; i < filesize(); i++) {
+        for (int i = 0; i < quantFiles; i++) {
             seekArq(i);
             aux.leDoArq(arquivo);
-            int position = (aux.getNumero() - min.getNumero()) * (filesize() - 1) / range;
+            int position = (aux.getNumero() - min.getNumero()) * (quantFiles - 1) / range;
             buckets[position].inserirRegNoFinal(aux);
         }
 
-        for (int i = 0; i < filesize(); i++) {
+        for (int i = 0; i < quantFiles; i++) {
             buckets[i].SelectionSort();
         }
 
-        int j = 0;
         Registro auxBucket = new Registro();
-        for (int i = 0; i < filesize(); i++) {
+        seekArq(0);
+        for (int i = 0; i < quantFiles; i++) {
+            buckets[i].seekArq(0);
             while (!buckets[i].eof()) {
-                buckets[i].seekArq(0);
                 auxBucket.leDoArq(buckets[i].getFile());
-
-                seekArq(j);
                 auxBucket.gravaNoArq(arquivo);
-                j++;
             }
         }
     }
-
 }
