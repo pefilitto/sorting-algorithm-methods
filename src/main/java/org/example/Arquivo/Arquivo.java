@@ -298,6 +298,57 @@ public class Arquivo {
         }
     }
 
+    public void HeapSort(){
+        int FD, FE, posmaior, pai, TL = filesize();
+        Registro auxPai = new Registro(), auxFD = new Registro(), auxFE = new Registro(), auxPosmaior = new Registro(), auxFim = new Registro(), auxInicio = new Registro();
+
+        while(TL > 1){
+            pai = TL / 2 - 1;
+
+            while(pai >= 0){
+                FE = pai * 2 + 1;
+                FD = FE + 1;
+                posmaior = FE;
+
+                if(FD < TL){
+                    seekArq(FD);
+                    auxFD.leDoArq(arquivo);
+                    seekArq(FE);
+                    auxFE.leDoArq(arquivo);
+
+                    if(auxFD.getNumero() > auxFE.getNumero())
+                        posmaior = FD;
+                }
+
+                seekArq(posmaior);
+                auxPosmaior.leDoArq(arquivo);
+                seekArq(pai);
+                auxPai.leDoArq(arquivo);
+
+                if(auxPosmaior.getNumero() > auxPai.getNumero()){
+                    seekArq(pai);
+                    auxPosmaior.gravaNoArq(arquivo);
+                    seekArq(posmaior);
+                    auxPai.gravaNoArq(arquivo);
+                }
+                pai--;
+            }
+
+            seekArq(0);
+            auxInicio.leDoArq(arquivo);
+            seekArq(TL - 1);
+            auxFim.leDoArq(arquivo);
+
+            seekArq(0);
+            auxFim.gravaNoArq(arquivo);
+            seekArq(TL - 1);
+            auxInicio.gravaNoArq(arquivo);
+
+            TL--;
+        }
+    }
+
+
     public void ShakeSort(){
         boolean changed = true;
         int filesize = filesize(), start = 0;
