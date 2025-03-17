@@ -213,4 +213,30 @@ public class Arquivo {
             i++;
         }
     }
+
+    public void Bubble_Sort() {
+        Registro actual = new Registro();
+        Registro next =  new Registro();
+        int fim = filesize();
+        boolean flag = true;
+
+        while (fim > 0 && flag) {
+            flag = false;
+
+            for (int i = 0; i < fim - 1; i++) {
+                seekArq(i);
+                actual.leDoArq(arquivo);
+                next.leDoArq(arquivo);
+
+                if (actual.getNumero() > next.getNumero()) {
+                    seekArq(i);
+                    next.gravaNoArq(arquivo);
+                    actual.gravaNoArq(arquivo);
+                    flag = true;
+                }
+            }
+
+            fim -= 1;
+        }
+    }
 }

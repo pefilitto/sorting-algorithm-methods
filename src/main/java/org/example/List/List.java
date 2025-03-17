@@ -126,6 +126,28 @@ public class List {
         }
     }
 
+    public void BubbleSort(){
+        Node inicio = first;
+        Node fim = last;
+        int aux;
+        boolean flag = true;
+
+        while (fim != inicio && flag) {
+            flag = false;
+
+            for (Node atual = first; atual != fim; atual = atual.GetNext()) {
+                if(atual.GetData() > atual.GetNext().GetData()){
+                  aux = atual.GetData();
+                  atual.SetData(atual.GetNext().GetData());
+                  atual.GetNext().SetData(aux);
+                  flag = true;
+                }
+            }
+
+            fim = fim.GetPrev();
+        }
+    }
+
     public void CountingSortToRadix(int exp) {
         int size = SizeList();
 
