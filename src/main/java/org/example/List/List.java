@@ -383,8 +383,8 @@ public class List {
     public void QuickSemPivoI() {
         Node start, end;
         boolean flag = true;
-        Stack<Integer> startStack = new Stack<>();
-        Stack<Integer> endStack = new Stack<>();
+        Stack startStack = new Stack();
+        Stack endStack = new Stack();
 
         startStack.Push(0);
         endStack.Push(SizeList() - 1);

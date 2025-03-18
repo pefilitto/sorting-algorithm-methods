@@ -1,23 +1,23 @@
 package org.example.Stack;
 
-public class Element<T> {
-    private T data;
-    private Element<T> next;
+public class Element {
+    private int data;
+    private Element next;
 
-    public Element(T data) {
+    public Element(int data) {
         this.data = data;
         this.next = null;
     }
 
-    public void SetNext(Element<T> elem) {
+    public void SetNext(Element elem) {
         this.next = elem;
     }
 
-    public Element<T> GetNext() {
+    public Element GetNext() {
         return this.next;
     }
 
-    public T GetData() {
+    public int GetData() {
         return this.data;
     }
 }
