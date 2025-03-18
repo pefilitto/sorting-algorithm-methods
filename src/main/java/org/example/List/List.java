@@ -3,10 +3,12 @@ package org.example.List;
 public class List {
     private Node first;
     private Node last;
+    private int tl;
 
     public List(){
         this.first = null;
         this.last = null;
+        this.tl = 0;
     }
 
     private boolean IsEmpty(){
@@ -74,6 +76,7 @@ public class List {
             newElement.SetPrev(aux);
             last = newElement;
         }
+        tl++;
     }
 
     public void PrintList(){
@@ -179,6 +182,45 @@ public class List {
             }
             inicio = inicio.GetNext();
         }
+    }
+
+    public void Heap_Sort() {
+        Node pai, fe, fim = last, maior;
+        int aux, posFe, posPai, posFim = tl;
+
+        while(first != fim) {
+            posPai = posFim / 2 - 1;
+            pai = GetNodeByPos(posPai);
+            while(posPai >= 0) {
+                posFe = posPai * 2 + 1;
+
+                fe = GetNodeByPos(posFe);
+                maior = fe;
+
+                if (posFe + 1 < posFim &&  fe.GetNext().GetData() > fe.GetData())
+                    maior = fe.GetNext();
+
+                if (maior.GetData() > pai.GetData()) {
+                    aux = maior.GetData();
+                    maior.SetData(pai.GetData());
+                    pai.SetData(aux);
+                }
+
+                posPai--;
+                if (posPai > 0)
+                    pai = pai.GetPrev();
+            }
+
+
+            aux = first.GetData();
+            first.SetData(fim.GetData());
+            fim.SetData(aux);
+
+            fim = fim.GetPrev();
+            posFim--;
+        }
+
+
     }
 
     public void CountingSortToRadix(int exp) {

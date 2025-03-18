@@ -283,4 +283,52 @@ public class Arquivo {
         }
 
     }
+
+    public void Heap_Sort() {
+        Registro fe = new Registro(), fd = new Registro(), pai = new Registro(), maior = new Registro(), primeiro = new Registro(), ultimo = new Registro();
+        int posFe, posPai, posMaior, fim = filesize();
+
+        while (fim > 1) {
+            posPai = fim / 2 - 1;
+
+            while (posPai >= 0) {
+                posFe = posPai * 2 + 1;
+                posMaior = posFe;
+
+                seekArq(posFe);
+                fe.leDoArq(arquivo);
+                fd.leDoArq(arquivo);
+
+                if (posFe + 1 < fim && fd.getNumero() > fe.getNumero())
+                    posMaior = posFe + 1;
+
+                seekArq(posMaior);
+                maior.leDoArq(arquivo);
+
+                seekArq(posPai);
+                pai.leDoArq(arquivo);
+
+                if (maior.getNumero() > pai.getNumero()) {
+                    seekArq(posPai);
+                    maior.gravaNoArq(arquivo);
+                    seekArq(posMaior);
+                    pai.gravaNoArq(arquivo);
+                }
+
+                posPai--;
+            }
+
+            seekArq(0);
+            primeiro.leDoArq(arquivo);
+            seekArq(fim - 1);
+            ultimo.leDoArq(arquivo);
+
+            seekArq(0);
+            ultimo.gravaNoArq(arquivo);
+            seekArq(fim - 1);
+            primeiro.gravaNoArq(arquivo);
+
+            fim--;
+        }
+    }
 }
