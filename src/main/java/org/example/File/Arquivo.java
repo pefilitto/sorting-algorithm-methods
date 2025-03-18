@@ -239,4 +239,48 @@ public class Arquivo {
             fim -= 1;
         }
     }
+
+    public void Shake_Sort() {
+        int inicio = 0, fim = filesize() - 1;
+        Registro atual = new Registro();
+        Registro aux = new Registro();
+        boolean flag = true;
+
+        while(inicio != fim && flag) {
+            flag = false;
+
+            for (int i = inicio; i < fim; i++) {
+                seekArq(i);
+                atual.leDoArq(arquivo);
+                aux.leDoArq(arquivo);
+
+                if (atual.getNumero() > aux.getNumero()) {
+                    seekArq(i);
+                    aux.gravaNoArq(arquivo);
+                    atual.gravaNoArq(arquivo);
+                    flag = true;
+                }
+            }
+            fim--;
+
+            if (flag) {
+                flag = false;
+                for (int i = fim; i > inicio; i--) {
+                    seekArq(i - 1);
+                    aux.leDoArq(arquivo);
+                    atual.leDoArq(arquivo);
+
+                    if (atual.getNumero() < aux.getNumero()) {
+                        seekArq(i - 1);
+                        atual.gravaNoArq(arquivo);
+                        aux.gravaNoArq(arquivo);
+                        flag = true;
+                    }
+                }
+
+                inicio++;
+            }
+        }
+
+    }
 }

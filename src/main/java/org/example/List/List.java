@@ -148,6 +148,39 @@ public class List {
         }
     }
 
+    public void Shake_Sort() {
+        Node inicio = first;
+        Node fim =  last;
+        int aux;
+        boolean flag = true;
+
+        while(inicio != fim && flag) {
+            flag = false;
+
+            for (Node atual = inicio; atual != fim; atual = atual.GetNext()) {
+                if (atual.GetData() > atual.GetNext().GetData()) {
+                    aux = atual.GetData();
+                    atual.SetData(atual.GetNext().GetData());
+                    atual.GetNext().SetData(aux);
+                    flag = true;
+                }
+            }
+            fim = fim.GetPrev();
+
+            if (flag) {
+                for (Node atual = fim; atual != inicio; atual = atual.GetPrev()) {
+                    if (atual.GetData() < atual.GetPrev().GetData()) {
+                        aux = atual.GetData();
+                        atual.SetData(atual.GetPrev().GetData());
+                        atual.GetPrev().SetData(aux);
+                        flag = true;
+                    }
+                }
+            }
+            inicio = inicio.GetNext();
+        }
+    }
+
     public void CountingSortToRadix(int exp) {
         int size = SizeList();
 
