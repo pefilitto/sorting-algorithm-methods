@@ -1,5 +1,7 @@
 package org.example.List;
 
+import org.example.Stack.Stack;
+
 public class List {
     private Node first;
     private Node last;
@@ -63,6 +65,16 @@ public class List {
             cont++;
         }
         return node;
+    }
+
+    private int IndexByNode(Node node){
+        int cont = 0;
+        Node aux = first;
+        while(aux != node){
+            aux = aux.GetNext();
+            cont++;
+        }
+        return cont;
     }
 
     public void AddElement(int element){
@@ -338,5 +350,92 @@ public class List {
             }
         }
     }
+
+    public void ShellSort() {
+        int dist = 1, size = SizeList(), pos;
+        Node aux, i, nodePos, nodeDist;
+
+        while (dist < size) {
+            dist = dist * 2 + 1;
+        }
+        dist = dist / 2;
+
+        while (dist > 0) {
+            for (i = NodeByPos(dist); i != null; i = i.GetNext()) {
+                pos = IndexByNode(i);
+
+                while (pos >= dist && NodeByPos(pos - dist).GetData() > i.GetData()) {
+                    nodePos = NodeByPos(pos);
+                    nodeDist = NodeByPos(pos - dist);
+
+                    int temp = nodePos.GetData();
+                    nodePos.SetData(nodeDist.GetData());
+                    nodeDist.SetData(temp);
+
+                    pos -= dist;
+                }
+            }
+
+            dist = dist / 2;
+        }
+    }
+
+    public void QuickSemPivoI() {
+        Node start, end;
+        boolean flag = true;
+        Stack<Integer> startStack = new Stack<>();
+        Stack<Integer> endStack = new Stack<>();
+
+        startStack.Push(0);
+        endStack.Push(SizeList() - 1);
+
+        while (!startStack.IsEmpty() && !endStack.IsEmpty()) {
+            int startIndex = startStack.Pop();
+            int endIndex = endStack.Pop();
+
+            start = NodeByPos(startIndex);
+            end = NodeByPos(endIndex);
+
+            if (start != null && end != null && start != end) {
+                int i = startIndex, j = endIndex;
+                Node nodeI, nodeJ;
+
+                while (i < j) {
+                    nodeI = NodeByPos(i);
+                    nodeJ = NodeByPos(j);
+
+                    if(flag){
+                        while (i < j && nodeI.GetData() <= nodeJ.GetData()) {
+                            i++;
+                            nodeI = NodeByPos(i);
+                        }
+                    }
+                    else{
+                        while (i < j && nodeI.GetData() <= nodeJ.GetData()) {
+                            j--;
+                            nodeJ = NodeByPos(j);
+                        }
+                    }
+
+                    if (i < j) {
+                        int temp = nodeI.GetData();
+                        nodeI.SetData(nodeJ.GetData());
+                        nodeJ.SetData(temp);
+                        flag = !flag;
+                    }
+                }
+
+                if (i - 1 > startIndex) {
+                    startStack.Push(startIndex);
+                    endStack.Push(i - 1);
+                }
+                if (j + 1 < endIndex) {
+                    startStack.Push(j + 1);
+                    endStack.Push(endIndex);
+                }
+            }
+        }
+    }
+
 
 }
