@@ -16,7 +16,7 @@ public class Report {
         System.out.println("Antes da ordenacao Copia");
         copia.exibirArq();
 
-        copia.Selection_Sort();
+        copia.Heap_Sort();
         System.out.println("Depois da ordenacao");
         copia.exibirArq();
 

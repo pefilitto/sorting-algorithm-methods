@@ -14,27 +14,28 @@ public class Main {
         int tam = 5;
 
 
-        Array array = new Array(11);
+        /*Array array = new Array(11);
         List list = new List();
 
         for (int i = 0; i < 11; i++) {
             Random random = new Random();
 
+
             list.AddElement(random.nextInt(300));
             array.AddElement(random.nextInt(10));
         }
 
-        System.out.println("Antes da Ordenacao");
+        System.out.println("Antes da Or denacao");
         list.PrintList();
 
         System.out.println("Depois da ordenacao");
-        list.Gnome_Sort();
+        list.Heap_Sort();
         list.PrintList();
         //list.PrintList();*/
 
-        //Report report = new Report();
-        //report.generateFiles();
-
+       Report report = new Report();
+        report.generateFiles();
+       // */
        //arqOrd = new Arquivo("ArquivoOrdenado.dat");
 
 
