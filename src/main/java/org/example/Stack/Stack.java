@@ -1,14 +1,14 @@
 package org.example.Stack;
 
-public class Stack {
-    private Element first;
+public class Stack<T> {
+    private Element<T> first;
 
     public Stack() {
         this.first = null;
     }
 
-    public void Push(int elem) {
-        Element newElement = new Element(elem);
+    public void Push(T elem) {
+        Element<T> newElement = new Element<>(elem);
         if (first == null) {
             first = newElement;
         } else {
@@ -17,8 +17,8 @@ public class Stack {
         }
     }
 
-    public int Pop() {
-        int data = first.GetData();
+    public T Pop() {
+        T data = first.GetData();
         first = first.GetNext();
         return data;
     }
@@ -26,7 +26,12 @@ public class Stack {
     public boolean IsEmpty() {
         return first == null;
     }
+
+    public T Top() {
+        return first.GetData();
+    }
 }
+
 
 
 

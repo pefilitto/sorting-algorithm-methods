@@ -383,56 +383,106 @@ public class List {
     public void QuickSemPivoI() {
         Node start, end;
         boolean flag = true;
-        Stack startStack = new Stack();
-        Stack endStack = new Stack();
+        Stack<Node> startStack = new Stack<>();
+        Stack<Node> endStack = new Stack<>();
 
-        startStack.Push(0);
-        endStack.Push(SizeList() - 1);
+        startStack.Push(first);
+        endStack.Push(last);
 
         while (!startStack.IsEmpty() && !endStack.IsEmpty()) {
-            int startIndex = startStack.Pop();
-            int endIndex = endStack.Pop();
+            Node nodeI = startStack.Pop();
+            Node nodeJ = endStack.Pop();
 
-            start = NodeByPos(startIndex);
-            end = NodeByPos(endIndex);
+            int i = IndexByNode(nodeI);
+            int j = IndexByNode(nodeJ);
 
-            if (start != null && end != null && start != end) {
-                int i = startIndex, j = endIndex;
-                Node nodeI, nodeJ;
+            start = nodeI;
+            end = nodeJ;
 
-                while (i < j) {
-                    nodeI = NodeByPos(i);
-                    nodeJ = NodeByPos(j);
-
-                    if(flag){
-                        while (i < j && nodeI.GetData() <= nodeJ.GetData()) {
-                            i++;
-                            nodeI = NodeByPos(i);
-                        }
+            while (i < j) {
+                if(flag){
+                    while (i < j && nodeI.GetData() <= nodeJ.GetData()) {
+                        i++;
+                        nodeI = nodeI.GetNext();
                     }
-                    else{
-                        while (i < j && nodeI.GetData() <= nodeJ.GetData()) {
-                            j--;
-                            nodeJ = NodeByPos(j);
-                        }
-                    }
-
-                    if (i < j) {
-                        int temp = nodeI.GetData();
-                        nodeI.SetData(nodeJ.GetData());
-                        nodeJ.SetData(temp);
-                        flag = !flag;
+                }
+                else{
+                    while (i < j && nodeJ.GetData() >= nodeI.GetData()) {
+                        j--;
+                        nodeJ = nodeJ.GetPrev();
                     }
                 }
 
-                if (i - 1 > startIndex) {
-                    startStack.Push(startIndex);
-                    endStack.Push(i - 1);
+                if (i < j) {
+                    int temp = nodeI.GetData();
+                    nodeI.SetData(nodeJ.GetData());
+                    nodeJ.SetData(temp);
+                    flag = !flag;
                 }
-                if (j + 1 < endIndex) {
-                    startStack.Push(j + 1);
-                    endStack.Push(endIndex);
+            }
+
+            if (start != nodeI && nodeI.GetPrev() != null) {
+                startStack.Push(start);
+                endStack.Push(nodeI.GetPrev());
+            }
+            if (end != nodeJ && nodeJ.GetNext() != null) {
+                startStack.Push(nodeJ.GetNext());
+                endStack.Push(end);
+            }
+        }
+    }
+
+    public void QuickComPivoI() {
+        Stack<Node> startStack = new Stack<>(), endStack = new Stack<>();
+
+        startStack.Push(first);
+        endStack.Push(last);
+
+        while (!startStack.IsEmpty() && !endStack.IsEmpty()) {
+            Node start = startStack.Pop();
+            Node end = endStack.Pop();
+
+            Node nodeI = start;
+            Node nodeJ = end;
+
+            int i = IndexByNode(nodeI);
+            int j = IndexByNode(nodeJ);
+
+            int pivotIndex = (i + j) / 2;
+
+            Node nodePivot = NodeByPos(pivotIndex);
+
+            while (i <= j) {
+                while (nodeI.GetData() < nodePivot.GetData()) {
+                    nodeI = nodeI.GetNext();
+                    i++;
                 }
+
+                while (nodeJ.GetData() > nodePivot.GetData()) {
+                    nodeJ = nodeJ.GetPrev();
+                    j--;
+                }
+
+                if (i <= j) {
+                    int aux = nodeI.GetData();
+                    nodeI.SetData(nodeJ.GetData());
+                    nodeJ.SetData(aux);
+
+                    nodeI = nodeI.GetNext();
+                    nodeJ = nodeJ.GetPrev();
+                    i++;
+                    j--;
+                }
+            }
+
+            if (IndexByNode(start) < j) {
+                startStack.Push(start);
+                endStack.Push(NodeByPos(j));
+            }
+
+            if (i < IndexByNode(end)) {
+                startStack.Push(NodeByPos(i));
+                endStack.Push(end);
             }
         }
     }
