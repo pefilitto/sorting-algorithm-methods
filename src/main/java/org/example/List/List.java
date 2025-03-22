@@ -352,8 +352,7 @@ public class List {
     }
 
     public void ShellSort() {
-        int dist = 1, size = SizeList(), pos;
-        Node aux, i, nodePos, nodeDist;
+        int dist = 1, size = SizeList(), i, data;
 
         while (dist < size) {
             dist = dist * 2 + 1;
@@ -361,19 +360,16 @@ public class List {
         dist = dist / 2;
 
         while (dist > 0) {
-            for (i = NodeByPos(dist); i != null; i = i.GetNext()) {
-                pos = IndexByNode(i);
+            for (i = dist; i < size; i++) {
+                int index = i;
 
-                while (pos >= dist && NodeByPos(pos - dist).GetData() > i.GetData()) {
-                    nodePos = NodeByPos(pos);
-                    nodeDist = NodeByPos(pos - dist);
+                data = NodeByPos(index).GetData();
 
-                    int temp = nodePos.GetData();
-                    nodePos.SetData(nodeDist.GetData());
-                    nodeDist.SetData(temp);
-
-                    pos -= dist;
+                while (index - dist >= 0 && NodeByPos(index - dist).GetData() > data) {
+                    NodeByPos(index).SetData(NodeByPos(index - dist).GetData());
+                    index -= dist;
                 }
+                NodeByPos(index).SetData(data);
             }
 
             dist = dist / 2;
@@ -487,5 +483,46 @@ public class List {
         }
     }
 
+    public void MergeSortImpl1(){
+        int seq = 1;
+        while(seq < SizeList()){
+            List list1 = new List();
+            List list2 = new List();
 
+            Partition(list1, list2);
+            Fusion(list1, list2, seq);
+            seq = seq * 2;
+        }
+    }
+
+    private void Partition(List list1, List list2){
+        int middle = SizeList() / 2;
+        for (int i = 0; i < middle; i++) {
+            list1.AddElement(NodeByPos(i).GetData());
+            list2.AddElement(NodeByPos(middle + i).GetData());
+        }
+    }
+
+    private void Fusion(List list1, List list2, int sequence){
+        int k = 0, i = 0, j = 0, auxSec = sequence;
+
+        while(k < SizeList() - 1){
+            while(i < sequence && j < sequence){
+                if(list1.NodeByPos(i).GetData() < list2.NodeByPos(j).GetData()){
+                    NodeByPos(k++).SetData(list1.NodeByPos(i++).GetData());
+                }
+                else{
+                    NodeByPos(k++).SetData(list2.NodeByPos(j++).GetData());
+                }
+            }
+
+            while(i < sequence)
+                NodeByPos(k++).SetData(list1.NodeByPos(i++).GetData());
+
+            while(j < sequence)
+                NodeByPos(k++).SetData(list2.NodeByPos(j++).GetData());
+
+            sequence = sequence + auxSec;
+        }
+    }
 }

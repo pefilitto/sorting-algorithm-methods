@@ -8,10 +8,10 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        Array array = new Array(10);
+        Array array = new Array(8);
         List list = new List();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 8; i++) {
             Random random = new Random();
 
             list.AddElement(random.nextInt(100));
@@ -20,16 +20,16 @@ public class Main {
 
         System.out.println("Antes da Ordenacao");
         //array.PrintArray();
-        list.PrintList();
+        //list.PrintList();
 
 
         System.out.println();
 
         System.out.println("Depois da ordenacao");
-        list.QuickComPivoI();
-        list.PrintList();
+        //list.MergeSortImpl1();
+        //list.PrintList();
 
-        //Report report = new Report();
-        //report.generateFiles();
+        Report report = new Report();
+        report.generateFiles();
     }
 }

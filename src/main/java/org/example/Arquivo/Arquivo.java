@@ -1,5 +1,6 @@
 package org.example.Arquivo;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Random;
@@ -491,6 +492,117 @@ public class Arquivo {
                 auxBucket.leDoArq(buckets[i].getFile());
                 auxBucket.gravaNoArq(arquivo);
             }
+        }
+    }
+
+    public void ShellSort(){
+        int size = filesize(), dist = 1, data;
+        Registro aux = new Registro(), regDist = new Registro();
+
+        while(dist < size){
+            dist = dist * 2 + 1;
+        }
+        dist = dist / 2;
+
+        while(dist > 0){
+            for (int i = dist; i < size; i++) {
+                int pos = i;
+                seekArq(pos);
+                aux.leDoArq(arquivo);
+
+                seekArq(pos - dist);
+                regDist.leDoArq(arquivo);
+
+                while(pos - dist >= 0 && regDist.getNumero() > aux.getNumero()){
+                    seekArq(pos);
+                    regDist.gravaNoArq(arquivo);
+
+                    pos -= dist;
+
+                    seekArq(pos - dist);
+                    regDist.leDoArq(arquivo);
+                }
+                seekArq(pos);
+                aux.gravaNoArq(arquivo);
+            }
+            dist = dist / 2;
+        }
+    }
+
+    public void MergeSortImplem1(){
+        int seq = 1;
+        while(seq < filesize()){
+            Arquivo file1 = new Arquivo("file1Merge.dat");
+            Arquivo file2 = new Arquivo("file2Merge.dat");
+
+            Partition(file1, file2);
+            Fusion(file1, file2, seq);
+
+            seq *= 2;
+        }
+    }
+
+    public void Partition(Arquivo file1, Arquivo file2){
+        int middle = filesize() / 2;
+        Registro aux = new Registro();
+        for (int i = 0; i < middle; i++) {
+            seekArq(i);
+            aux.leDoArq(arquivo);
+
+            file1.seekArq(i);
+            aux.gravaNoArq(file1.arquivo);
+
+            seekArq(i + middle);
+            aux.leDoArq(arquivo);
+
+            file2.seekArq(i);
+            aux.gravaNoArq(file2.arquivo);
+        }
+    }
+
+    public void Fusion(Arquivo file1, Arquivo file2, int sequence){
+        int k = 0, i = 0, j = 0, auxSeq = sequence;
+        Registro auxFile1 = new Registro(), auxFile2 = new Registro();
+        while(k < filesize() - 1){
+            while(i < sequence && j < sequence){
+                file1.seekArq(i);
+                auxFile1.leDoArq(file1.arquivo);
+                file2.seekArq(j);
+                auxFile2.leDoArq(file2.arquivo);
+
+                seekArq(k);
+                if(auxFile1.getNumero() < auxFile2.getNumero()){
+                    auxFile1.gravaNoArq(arquivo);
+                    i++;
+                }
+                else{
+                    auxFile2.gravaNoArq(arquivo);
+                    j++;
+                }
+                k++;
+            }
+
+            while(i < sequence){
+                file1.seekArq(i);
+                auxFile1.leDoArq(file1.arquivo);
+
+                seekArq(k);
+                auxFile1.gravaNoArq(arquivo);
+                i++;
+                k++;
+            }
+
+            while(j < sequence){
+                file2.seekArq(j);
+                auxFile2.leDoArq(file2.arquivo);
+
+                seekArq(k);
+                auxFile2.gravaNoArq(arquivo);
+                k++;
+                j++;
+            }
+
+            sequence += auxSeq;
         }
     }
 }
