@@ -4,7 +4,7 @@ public class Report {
     //long tempoInicio, tempoFinal, timeInicio, timeFinal;
     Arquivo arqOrd, arqRev, arqRand, copia;
 
-    int tam = 5;
+    int tam = 8;
 
     public void generateFiles() {
         arqRand = new Arquivo("ArquivoRandomico.dat");
@@ -16,7 +16,7 @@ public class Report {
         System.out.println("Antes da ordenacao Copia");
         copia.exibirArq();
 
-        copia.ShellSort();
+        copia.MergeSortImplem2();
         System.out.println("Depois da ordenacao");
         copia.exibirArq();
 

@@ -525,4 +525,8 @@ public class List {
             sequence = sequence + auxSec;
         }
     }
+
+    public void MergeSortImplem2(){
+
+    }
 }
