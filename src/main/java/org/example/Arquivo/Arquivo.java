@@ -608,20 +608,20 @@ public class Arquivo {
     }
 
     public void MergeSortImplem2() {
-        Arquivo file = new Arquivo("arquivo.dat");
-        merge2(0, filesize() - 1, file);
+        Merge2(0, filesize() - 1);
     }
 
-    private void merge2(int esq, int dir, Arquivo file) {
+    private void Merge2(int esq, int dir) {
         if (esq < dir) {
             int meio = (esq + dir) / 2;
-            merge2(esq, meio, file);
-            merge2(meio + 1, dir, file);
-            Fusao2(esq, meio, meio+1, dir, file);
+            Merge2(esq, meio);
+            Merge2(meio + 1, dir);
+            Fusion2(esq, meio, meio+1, dir);
         }
     }
 
-    private void Fusao2(int ini1, int fim1, int ini2, int fim2, Arquivo file) {
+    private void Fusion2(int ini1, int fim1, int ini2, int fim2) {
+        Arquivo file = new Arquivo("arquivo.dat");
         int k = 0, i = ini1, j = ini2;
         Registro regI = new Registro(), regJ = new Registro();
 

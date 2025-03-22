@@ -26,7 +26,7 @@ public class Main {
         System.out.println();
 
         System.out.println("Depois da ordenacao");
-        //list.MergeSortImpl1();
+        //list.MergeSortImpl2();
         //list.PrintList();
 
         Report report = new Report();

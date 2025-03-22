@@ -526,7 +526,55 @@ public class List {
         }
     }
 
-    public void MergeSortImplem2(){
+    public void MergeSortImpl2(){
+        Node auxFirst = first;
+        Node auxLast = last;
 
+        Merge2(auxFirst, auxLast);
+    }
+
+    public void Merge2(Node start, Node end){
+        if(start != end){
+            int middle = (IndexByNode(start) + IndexByNode(end)) / 2;
+            Merge2(start, NodeByPos(middle));
+            Merge2(NodeByPos(middle + 1), end);
+            Partition2(start, NodeByPos(middle), NodeByPos(middle + 1), end);
+        }
+    }
+
+    public void Partition2(Node ini1, Node fim1, Node ini2, Node fim2){
+        List aux = new List();
+        Node auxIni1 = ini1, auxIni2 = ini2;
+
+        while(auxIni1 != null && auxIni1 != fim1.GetNext() && auxIni2 != null && auxIni2 != fim2.GetNext()){
+            if(auxIni1.GetData() < auxIni2.GetData()){
+                aux.AddElement(auxIni1.GetData());
+                auxIni1 = auxIni1.GetNext();
+            }
+            else {
+                aux.AddElement(auxIni2.GetData());
+                auxIni2 = auxIni2.GetNext();
+            }
+        }
+
+        while(auxIni1 != null && auxIni1 != fim1.GetNext()){
+            aux.AddElement(auxIni1.GetData());
+            auxIni1 = auxIni1.GetNext();
+        }
+
+        while(auxIni2 != null && auxIni2 != fim2.GetNext()){
+            aux.AddElement(auxIni2.GetData());
+            auxIni2 = auxIni2.GetNext();
+        }
+
+
+        Node auxList = ini1;
+        Node auxList2 = aux.first;
+
+        while(auxList != null && auxList2 != null){
+            auxList.SetData(auxList2.GetData());
+            auxList = auxList.GetNext();
+            auxList2 = auxList2.GetNext();
+        }
     }
 }
