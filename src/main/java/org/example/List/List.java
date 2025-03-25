@@ -186,19 +186,21 @@ public class List {
 
     public void Heap_Sort() {
         Node pai, fe, fim = last, maior;
-        int aux, posFe, posPai, posFim = tl;
+        int aux, posFe, posPai, posFim = tl, posFd;
 
-        while(first != fim) {
+        while(posFim > 0) {
             posPai = posFim / 2 - 1;
             pai = GetNodeByPos(posPai);
+
             while(posPai >= 0) {
                 posFe = posPai * 2 + 1;
+                posFd = posFe + 1;
 
                 fe = GetNodeByPos(posFe);
                 maior = fe;
 
-                if (posFe + 1 < posFim &&  fe.GetNext().GetData() > fe.GetData())
-                    maior = fe.GetNext();
+                if (posFd < posFim && GetNodeByPos(posFd).GetData() > fe.GetData())
+                    maior = GetNodeByPos(posFd);
 
                 if (maior.GetData() > pai.GetData()) {
                     aux = maior.GetData();
@@ -207,21 +209,15 @@ public class List {
                 }
 
                 posPai--;
-                if (posPai > 0)
-                    pai = pai.GetPrev();
             }
-
 
             aux = first.GetData();
             first.SetData(fim.GetData());
             fim.SetData(aux);
-
-            fim = fim.GetPrev();
             posFim--;
         }
-
-
     }
+
 
     public void CountingSortToRadix(int exp) {
         int size = SizeList();
