@@ -666,4 +666,41 @@ public class Arquivo {
             regI.gravaNoArq(arquivo);
         }
     }
+
+    private int getNextGap(int gap) {
+        gap = gap * 10 / 13;
+        if (gap < 1)
+            return 1;
+        return  gap;
+    }
+
+    public void CombSort() {
+        Registro regI = new Registro();
+        Registro regGap = new Registro();
+        int gap = filesize();
+        boolean trocou = true;
+
+
+        while(gap != 1 || trocou) {
+            trocou = false;
+            gap = getNextGap(gap);
+
+            for (int i = 0; i < filesize() - gap; i++) {
+                seekArq(i);
+                regI.leDoArq(arquivo);
+
+                seekArq(i + gap);
+                regGap.leDoArq(arquivo);
+
+                if (regGap.getNumero() < regI.getNumero()) {
+                    seekArq(i);
+                    regGap.gravaNoArq(arquivo);
+
+                    seekArq(i + gap);
+                    regI.gravaNoArq(arquivo);
+                    trocou = true;
+                }
+            }
+        }
+    }
 }
