@@ -580,6 +580,39 @@ public class List {
         }
     }
 
+    private int getNextGap(int gap) {
+        gap = gap * 10 / 13;
+        if (gap < 1)
+            return 1;
+        return  gap;
+    }
+
+    public void CombSort() {
+        Node nodeGap;
+        int gap = SizeList();
+        boolean trocou = true;
+
+
+        while(gap != 1 || trocou) {
+            trocou = false;
+            gap = getNextGap(gap);
+
+            Node atual = first;
+            for (int i = 0; i < SizeList() - gap; i++) {
+                nodeGap =  NodeByPos(i + gap);
+
+                if (atual.GetData() > nodeGap.GetData()) {
+                    int aux = atual.GetData();
+                    atual.SetData(nodeGap.GetData());
+                    nodeGap.SetData(aux);
+                    trocou = true;
+                }
+
+                atual = atual.GetNext();
+            }
+        }
+    }
+
     public void InsertionSortForTim(Node start, Node end){
         Node node = start.GetNext();
 
