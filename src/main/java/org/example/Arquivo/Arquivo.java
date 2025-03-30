@@ -461,32 +461,32 @@ public class Arquivo {
         }
     }
 
-    public void BucketSort(int quantFiles) {
-        Arquivo[] buckets = new Arquivo[quantFiles];
+    public void BucketSort() {
+        Arquivo[] buckets = new Arquivo[filesize()];
         Registro aux = new Registro();
         Registro max = GetMaxRegister();
         Registro min = GetMinRegister();
         int range = max.getNumero() - min.getNumero();
 
-        for (int i = 0; i < quantFiles; i++) {
+        for (int i = 0; i < filesize(); i++) {
             buckets[i] = new Arquivo(i + ".dat");
             buckets[i].truncate(0);
         }
 
-        for (int i = 0; i < quantFiles; i++) {
+        for (int i = 0; i < filesize(); i++) {
             seekArq(i);
             aux.leDoArq(arquivo);
-            int position = (aux.getNumero() - min.getNumero()) * (quantFiles - 1) / range;
+            int position = (aux.getNumero() - min.getNumero()) * (filesize() - 1) / range;
             buckets[position].inserirRegNoFinal(aux);
         }
 
-        for (int i = 0; i < quantFiles; i++) {
+        for (int i = 0; i < filesize(); i++) {
             buckets[i].SelectionSort();
         }
 
         Registro auxBucket = new Registro();
         seekArq(0);
-        for (int i = 0; i < quantFiles; i++) {
+        for (int i = 0; i < filesize(); i++) {
             buckets[i].seekArq(0);
             while (!buckets[i].eof()) {
                 auxBucket.leDoArq(buckets[i].getFile());
@@ -666,4 +666,6 @@ public class Arquivo {
             regI.gravaNoArq(arquivo);
         }
     }
+
+
 }
