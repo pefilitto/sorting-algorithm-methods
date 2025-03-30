@@ -189,7 +189,7 @@ public class List {
     }
 
     public void CountingSort(){
-        int higher = 0, cont = 0;
+        int higher = 0;
         int[] countingArray = new int[0], outputArray = new int[SizeList()];
         Node aux = first;
 
@@ -649,9 +649,5 @@ public class List {
                 }
             }
         }
-    }
-
-    public void CombSort(){
-
     }
 }
