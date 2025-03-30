@@ -1,21 +1,18 @@
 package org.example;
 
 import org.example.Arquivo.Report;
-import org.example.Array.Array;
 import org.example.List.List;
 
 import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        Array array = new Array(8);
         List list = new List();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 1031; i++) {
             Random random = new Random();
 
-            list.AddElement(random.nextInt(100));
-            array.AddElement(random.nextInt(10));
+            list.AddElement(random.nextInt(10000));
         }
 
         System.out.println("Antes da Ordenacao");
@@ -26,7 +23,7 @@ public class Main {
         System.out.println();
 
         System.out.println("Depois da ordenacao");
-        //list.MergeSortImpl2();
+        //list.TimSort();
         //list.PrintList();
 
         Report report = new Report();

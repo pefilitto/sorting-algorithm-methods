@@ -11,6 +11,14 @@ public class List {
         this.last = null;
     }
 
+    public Node getFirst() {
+        return first;
+    }
+
+    public Node getLast() {
+        return last;
+    }
+
     private boolean IsEmpty(){
         return this.first == null && this.last == null;
     }
@@ -110,14 +118,15 @@ public class List {
 
         node = first.GetNext();
         while(node != null){
+            int data = node.GetData();
             aux = node;
 
-            while(aux != first && node.GetData() < aux.GetPrev().GetData()){
+            while(aux != first && data < aux.GetPrev().GetData()){
                 aux.SetData(aux.GetPrev().GetData());
                 aux = aux.GetPrev();
             }
 
-            aux.SetData(node.GetData());
+            aux.SetData(data);
             node = node.GetNext();
         }
     }
@@ -180,7 +189,7 @@ public class List {
     }
 
     public void CountingSort(){
-        int higher = 0, cont = 0;
+        int higher = 0;
         int[] countingArray = new int[0], outputArray = new int[SizeList()];
         Node aux = first;
 
@@ -389,32 +398,26 @@ public class List {
             Node nodeI = startStack.Pop();
             Node nodeJ = endStack.Pop();
 
-            int i = IndexByNode(nodeI);
-            int j = IndexByNode(nodeJ);
-
             start = nodeI;
             end = nodeJ;
 
-            while (i < j) {
+            while (nodeI != nodeJ) {
                 if(flag){
-                    while (i < j && nodeI.GetData() <= nodeJ.GetData()) {
-                        i++;
+                    while (nodeI != nodeJ && nodeI.GetData() <= nodeJ.GetData()) {
                         nodeI = nodeI.GetNext();
                     }
                 }
                 else{
-                    while (i < j && nodeJ.GetData() >= nodeI.GetData()) {
-                        j--;
+                    while (nodeI != nodeJ && nodeJ.GetData() >= nodeI.GetData()) {
                         nodeJ = nodeJ.GetPrev();
                     }
                 }
 
-                if (i < j) {
-                    int temp = nodeI.GetData();
-                    nodeI.SetData(nodeJ.GetData());
-                    nodeJ.SetData(temp);
-                    flag = !flag;
-                }
+                int temp = nodeI.GetData();
+                nodeI.SetData(nodeJ.GetData());
+                nodeJ.SetData(temp);
+                flag = !flag;
+
             }
 
             if (start != nodeI && nodeI.GetPrev() != null) {
@@ -538,11 +541,11 @@ public class List {
             int middle = (IndexByNode(start) + IndexByNode(end)) / 2;
             Merge2(start, NodeByPos(middle));
             Merge2(NodeByPos(middle + 1), end);
-            Partition2(start, NodeByPos(middle), NodeByPos(middle + 1), end);
+            Fusion2(start, NodeByPos(middle), NodeByPos(middle + 1), end);
         }
     }
 
-    public void Partition2(Node ini1, Node fim1, Node ini2, Node fim2){
+    public void Fusion2(Node ini1, Node fim1, Node ini2, Node fim2){
         List aux = new List();
         Node auxIni1 = ini1, auxIni2 = ini2;
 
@@ -566,7 +569,6 @@ public class List {
             aux.AddElement(auxIni2.GetData());
             auxIni2 = auxIni2.GetNext();
         }
-
 
         Node auxList = ini1;
         Node auxList2 = aux.first;
@@ -607,6 +609,44 @@ public class List {
                 }
 
                 atual = atual.GetNext();
+            }
+        }
+    }
+
+    public void InsertionSortForTim(Node start, Node end){
+        Node node = start.GetNext();
+
+        while(node != null && node != end.GetNext()){
+            int data = node.GetData();
+            Node aux = node;
+
+            while(aux != start && data < aux.GetPrev().GetData()){
+                aux.SetData(aux.GetPrev().GetData());
+                aux = aux.GetPrev();
+            }
+
+            aux.SetData(data);
+            node = node.GetNext();
+        }
+    }
+
+    public void TimSort(){
+        int minExec = 32;
+        int length = SizeList();
+
+        for (int i = 0; i < length; i += minExec) {
+            InsertionSortForTim(NodeByPos(i), NodeByPos(Math.min(i + minExec - 1, length - 1)));
+        }
+
+        for (int size = minExec; size < length; size *= 2) {
+            for (int left = 0; left < length; left += 2 * size) {
+                Node leftNode = NodeByPos(left);
+                Node midNode = NodeByPos(left + size - 1);
+                Node rightNode = NodeByPos(Math.min(left + 2 * size - 1, length - 1));
+
+                if (leftNode != null && midNode != null && rightNode != null && midNode.GetNext() != null) {
+                    Fusion2(leftNode, midNode, midNode.GetNext(), rightNode);
+                }
             }
         }
     }
