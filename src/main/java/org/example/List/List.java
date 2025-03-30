@@ -571,7 +571,7 @@ public class List {
         Node auxList = ini1;
         Node auxList2 = aux.first;
 
-        while(auxList != null && auxList2 != null){
+        while(auxList2 != null){
             auxList.SetData(auxList2.GetData());
             auxList = auxList.GetNext();
             auxList2 = auxList2.GetNext();

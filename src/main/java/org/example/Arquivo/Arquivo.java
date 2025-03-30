@@ -186,9 +186,11 @@ public class Arquivo {
             prev.leDoArq(arquivo);
             actual.leDoArq(arquivo);
 
+            comparacoes++;
             while(pos > 0 && actual.getNumero() < prev.getNumero()) {
                 seekArq(pos);
                 prev.gravaNoArq(arquivo);
+                movimentacoes++;
                 pos--;
 
                 if (pos > 0) {
@@ -198,6 +200,7 @@ public class Arquivo {
             }
             seekArq(pos);
             actual.gravaNoArq(arquivo);
+            movimentacoes++;
             i++;
         }
     }
@@ -218,6 +221,7 @@ public class Arquivo {
                 seekArq(j);
                 actualJ.leDoArq(arquivo);
 
+                comparacoes++;
                 if(actualJ.getNumero() < minimumPosRegister.getNumero()){
                     seekArq(j);
                     minimumPosRegister.leDoArq(arquivo);
@@ -226,10 +230,12 @@ public class Arquivo {
                 j++;
             }
 
+            movimentacoes++;
             seekArq(i);
             minimumPosRegister.gravaNoArq(arquivo);
             seekArq(minimumPos);
             actualI.gravaNoArq(arquivo);
+            movimentacoes++;
             i++;
         }
     }
@@ -245,6 +251,7 @@ public class Arquivo {
         Registro aux = new Registro();
         aux.leDoArq(arquivo);
         while (!eof()) {
+            comparacoes++;
             if (aux.getNumero() > max)
                 max = aux.getNumero();
             aux.leDoArq(arquivo);
@@ -274,6 +281,7 @@ public class Arquivo {
         for (i = 0; i < size; i++) {
             aux.setNumero(outputArray[i]);
             aux.gravaNoArq(arquivo);
+            movimentacoes++;
         }
     }
 
@@ -282,17 +290,22 @@ public class Arquivo {
         boolean changed = true;
         Registro actual = new Registro();
         Registro next = new Registro();
+
         while(filesize > 1 && changed){
             changed = false;
             for (i = 0; i < filesize - 1; i++) {
                 seekArq(i);
                 actual.leDoArq(arquivo);
                 next.leDoArq(arquivo);
+
+                comparacoes++;
                 if(actual.getNumero() > next.getNumero()){
                     seekArq(i);
                     next.gravaNoArq(arquivo);
                     actual.gravaNoArq(arquivo);
                     changed = true;
+                    movimentacoes++;
+                    movimentacoes++;
                 }
             }
             filesize--;
@@ -317,6 +330,7 @@ public class Arquivo {
                     seekArq(FE);
                     auxFE.leDoArq(arquivo);
 
+                    comparacoes++;
                     if(auxFD.getNumero() > auxFE.getNumero())
                         posmaior = FD;
                 }
@@ -326,15 +340,19 @@ public class Arquivo {
                 seekArq(pai);
                 auxPai.leDoArq(arquivo);
 
+                comparacoes++;
                 if(auxPosmaior.getNumero() > auxPai.getNumero()){
                     seekArq(pai);
                     auxPosmaior.gravaNoArq(arquivo);
                     seekArq(posmaior);
                     auxPai.gravaNoArq(arquivo);
+                    movimentacoes++;
+                    movimentacoes++;
                 }
                 pai--;
             }
 
+            movimentacoes++;
             seekArq(0);
             auxInicio.leDoArq(arquivo);
             seekArq(TL - 1);
@@ -344,6 +362,8 @@ public class Arquivo {
             auxFim.gravaNoArq(arquivo);
             seekArq(TL - 1);
             auxInicio.gravaNoArq(arquivo);
+            movimentacoes++;
+            movimentacoes++;
 
             TL--;
         }
@@ -363,11 +383,15 @@ public class Arquivo {
                 seekArq(i);
                 actual.leDoArq(arquivo);
                 next.leDoArq(arquivo);
+
+                comparacoes++;
                 if(actual.getNumero() > next.getNumero()){
                     seekArq(i);
                     next.gravaNoArq(arquivo);
                     actual.gravaNoArq(arquivo);
                     changed = true;
+                    movimentacoes++;
+                    movimentacoes++;
                 }
             }
 
@@ -380,12 +404,16 @@ public class Arquivo {
                     actual.leDoArq(arquivo);
                     seekArq(i - 1);
                     prev.leDoArq(arquivo);
+
+                    comparacoes++;
                     if(actual.getNumero() < prev.getNumero()){
                         seekArq(i);
                         prev.gravaNoArq(arquivo);
                         seekArq(i - 1);
                         actual.gravaNoArq(arquivo);
                         changed = true;
+                        movimentacoes++;
+                        movimentacoes++;
                     }
                 }
                 start++;
@@ -407,11 +435,14 @@ public class Arquivo {
                 seekArq(i - 1);
                 prev.leDoArq(arquivo);
 
+                comparacoes++;
                 if(actual.getNumero() < prev.getNumero()){
                     seekArq(i);
                     prev.gravaNoArq(arquivo);
                     seekArq(i - 1);
                     actual.gravaNoArq(arquivo);
+                    movimentacoes++;
+                    movimentacoes++;
                     i--;
                 }
                 else{
@@ -450,6 +481,7 @@ public class Arquivo {
             aux.setNumero(outputArray[i]);
             seekArq(i);
             aux.gravaNoArq(arquivo);
+            movimentacoes++;
         }
     }
 
@@ -491,6 +523,7 @@ public class Arquivo {
             while (!buckets[i].eof()) {
                 auxBucket.leDoArq(buckets[i].getFile());
                 auxBucket.gravaNoArq(arquivo);
+                movimentacoes++;
             }
         }
     }
@@ -513,9 +546,12 @@ public class Arquivo {
                 seekArq(pos - dist);
                 regDist.leDoArq(arquivo);
 
+
+                comparacoes++;
                 while(pos - dist >= 0 && regDist.getNumero() > aux.getNumero()){
                     seekArq(pos);
                     regDist.gravaNoArq(arquivo);
+                    movimentacoes++;
 
                     pos -= dist;
 
@@ -524,6 +560,7 @@ public class Arquivo {
                 }
                 seekArq(pos);
                 aux.gravaNoArq(arquivo);
+                movimentacoes++;
             }
             dist = dist / 2;
         }
@@ -552,12 +589,14 @@ public class Arquivo {
 
             file1.seekArq(i);
             aux.gravaNoArq(file1.arquivo);
+            movimentacoes++;
 
             seekArq(i + middle);
             aux.leDoArq(arquivo);
 
             file2.seekArq(i);
             aux.gravaNoArq(file2.arquivo);
+            movimentacoes++;
         }
     }
 
@@ -572,12 +611,15 @@ public class Arquivo {
                 auxFile2.leDoArq(file2.arquivo);
 
                 seekArq(k);
+                comparacoes++;
                 if(auxFile1.getNumero() < auxFile2.getNumero()){
                     auxFile1.gravaNoArq(arquivo);
+                    movimentacoes++;
                     i++;
                 }
                 else{
                     auxFile2.gravaNoArq(arquivo);
+                    movimentacoes++;
                     j++;
                 }
                 k++;
@@ -589,6 +631,7 @@ public class Arquivo {
 
                 seekArq(k);
                 auxFile1.gravaNoArq(arquivo);
+                movimentacoes++;
                 i++;
                 k++;
             }
@@ -599,6 +642,7 @@ public class Arquivo {
 
                 seekArq(k);
                 auxFile2.gravaNoArq(arquivo);
+                movimentacoes++;
                 k++;
                 j++;
             }
@@ -633,11 +677,14 @@ public class Arquivo {
             regJ.leDoArq(arquivo);
 
             file.seekArq(k++);
+            comparacoes++;
             if (regI.getNumero() < regJ.getNumero()) {
                 regI.gravaNoArq(file.arquivo);
+                movimentacoes++;
                 i++;
             } else {
                 regJ.gravaNoArq(file.arquivo);
+                movimentacoes++;
                 j++;
             }
         }
@@ -648,6 +695,7 @@ public class Arquivo {
 
             file.seekArq(k++);
             regI.gravaNoArq(file.arquivo);
+            movimentacoes++;
         }
 
         while(j <= fim2) {
@@ -656,6 +704,7 @@ public class Arquivo {
 
             file.seekArq(k++);
             regJ.gravaNoArq(file.arquivo);
+            movimentacoes++;
         }
 
         for (int l = 0; l < k; l++) {
@@ -664,6 +713,7 @@ public class Arquivo {
 
             seekArq(ini1 + l);
             regI.gravaNoArq(arquivo);
+            movimentacoes++;
         }
     }
 
@@ -692,6 +742,7 @@ public class Arquivo {
                 seekArq(i + gap);
                 regGap.leDoArq(arquivo);
 
+                comparacoes++;
                 if (regGap.getNumero() < regI.getNumero()) {
                     seekArq(i);
                     regGap.gravaNoArq(arquivo);
@@ -699,6 +750,8 @@ public class Arquivo {
                     seekArq(i + gap);
                     regI.gravaNoArq(arquivo);
                     trocou = true;
+                    movimentacoes++;
+                    movimentacoes++;
                 }
             }
         }
