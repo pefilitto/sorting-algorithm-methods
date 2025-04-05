@@ -3,7 +3,7 @@ package org.example.Arquivo;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-class Registro
+public class Registro
 {
     public final int tf=1022;
     private int numero; //4 bytes

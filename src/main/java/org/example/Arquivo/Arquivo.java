@@ -173,6 +173,53 @@ public class Arquivo {
         }
         return auxMenor;
     }
+    
+    public int BinarySearch(int info, int end){
+        Registro reg = new Registro();
+        int start = 0, half = end / 2;
+        seekArq(half);
+        reg.leDoArq(arquivo);
+        comparacoes++;
+        while (start < end && reg.getNumero() != info) {
+            comparacoes++;
+            if (reg.getNumero() < info) {
+                start = half + 1;
+            } else {
+                end = half - 1;
+            }
+            half = (start + end) / 2;
+            seekArq(half);
+            reg.leDoArq(arquivo);
+            comparacoes++;
+        }
+        comparacoes++;
+        if (info > reg.getNumero()) {
+            return half + 1;
+        }
+        return half;
+    }
+
+    public void BinaryInsertionSort() {
+        Registro reg = new Registro(), aux = new Registro();
+        int i = 1, tam = filesize(), j, pos;
+        while (i < tam) {
+            seekArq(i);
+            aux.leDoArq(arquivo);
+            pos = BinarySearch(aux.getNumero(), i - 1);
+            j = i;
+            while (j > pos) {
+                seekArq(j - 1);
+                reg.leDoArq(arquivo);
+                reg.gravaNoArq(arquivo);
+                j--;
+                movimentacoes++;
+            }
+            seekArq(j);
+            movimentacoes++;
+            aux.gravaNoArq(arquivo);
+            i++;
+        }
+    }
 
     public void InsertionSort(){
         Registro actual = new Registro();
@@ -242,7 +289,7 @@ public class Arquivo {
     public void CountingSort() {
         int max = 0;
         int i = 0;
-        int size = filesize();
+        int size = filesize() - 1;
 
         int[] outputArray = new int[size];
 
@@ -752,6 +799,172 @@ public class Arquivo {
                     movimentacoes++;
                     movimentacoes++;
                 }
+            }
+        }
+    }
+
+    public void QuickSP(){
+        QuickSemPivo(0, filesize() - 1);
+    }
+    
+    public void QuickSemPivo(int start, int end){
+        Registro regI = new Registro(), regJ = new Registro();
+        int i = start, j = end;
+
+        while (i < j) {
+
+            seekArq(i);
+            regI.leDoArq(arquivo);
+            seekArq(j);
+            regJ.leDoArq(arquivo);
+
+            comparacoes++;
+            while (i < j && regI.getNumero() <= regJ.getNumero()) {
+                i++;
+                seekArq(i);
+                regI.leDoArq(arquivo);
+                comparacoes++;
+            }
+
+            comparacoes++;
+            if (regI.getNumero() != regJ.getNumero()) {
+                seekArq(i);
+                regI.leDoArq(arquivo);
+                seekArq(j);
+                regJ.leDoArq(arquivo);
+                seekArq(j);
+                regI.gravaNoArq(arquivo);
+                seekArq(i);
+                regJ.gravaNoArq(arquivo);
+                movimentacoes += 2;
+            }
+
+            seekArq(i);
+            regI.leDoArq(arquivo);
+            seekArq(j);
+            regJ.leDoArq(arquivo);
+
+            comparacoes++;
+            while (i < j && regI.getNumero() <= regJ.getNumero()) {
+                j--;
+                seekArq(j);
+                regJ.leDoArq(arquivo);
+                comparacoes++;
+            }
+
+            comparacoes++;
+            if (regI.getNumero() != regJ.getNumero()) {
+                seekArq(i);
+                regI.leDoArq(arquivo);
+                seekArq(j);
+                regJ.leDoArq(arquivo);
+                seekArq(j);
+                regI.gravaNoArq(arquivo);
+                seekArq(i);
+                regJ.gravaNoArq(arquivo);
+                movimentacoes += 2;
+            }
+        }
+
+        if (start < i - 1) {
+            QuickSemPivo(start, i - 1);
+        }
+        if (j + 1 < end) {
+            QuickSemPivo(j + 1, end);
+        }
+    }
+
+    public void QuickCP(){
+        QuickComPivo(0, filesize() - 1);
+    }
+
+    public void QuickComPivo(int start, int end){
+        int i = start, j = end;
+        Registro regI = new Registro(), regJ = new Registro(), regPivot = new Registro();
+
+        seekArq((i + j) / 2);
+        regPivot.leDoArq(arquivo);
+
+        while (i < j) {
+            seekArq(i);
+            regI.leDoArq(arquivo);
+            comparacoes++;
+            while (regI.getNumero() < regPivot.getNumero()) {
+                i++;
+                regI.leDoArq(arquivo);
+                comparacoes++;
+            }
+
+            seekArq(j);
+            regJ.leDoArq(arquivo);
+            comparacoes++;
+            while (regJ.getNumero() > regPivot.getNumero()) {
+                j--;
+                seekArq(j);
+                regJ.leDoArq(arquivo);
+                comparacoes++;
+            }
+
+            if (i <= j) {
+                seekArq(i);
+                regJ.gravaNoArq(arquivo);
+                seekArq(j);
+                regI.gravaNoArq(arquivo);
+                i++;
+                j--;
+                movimentacoes += 2;
+            }
+        }
+
+        if (start < i) {
+            QuickComPivo(start, j);
+        }
+
+        if (j < end) {
+            QuickComPivo(i, end);
+        }
+    }
+
+    public void TimInsertionSort(int start, int end){
+        Registro reg = new Registro(), aux = new Registro();
+        int i = start + 1, j;
+        while (i <= end) {
+            j = i;
+            seekArq(j);
+            reg.leDoArq(arquivo);
+            seekArq(j - 1);
+            aux.leDoArq(arquivo);
+            comparacoes++;
+            while (j > 0 && reg.getNumero() < aux.getNumero()) {
+                seekArq(j);
+                aux.gravaNoArq(arquivo);
+                movimentacoes++;
+                j--;
+                if (j > 0) {
+                    seekArq(j - 1);
+                    aux.leDoArq(arquivo);
+                    movimentacoes++;
+                }
+                comparacoes++;
+            }
+            seekArq(j);
+            reg.gravaNoArq(arquivo);
+            movimentacoes++;
+            i++;
+        }
+    }
+
+    public void TimSort(){
+        int length = filesize(), run = 32;
+        for (int i = 0; i < length; i += run) {
+            TimInsertionSort(i, Math.min(i + run - 1, length - 1));
+        }
+
+        for (int size = run; size < length; size = 2 * size) {
+            for (int left = 0; left < length; left += 2 * size) {
+                int mid = left + size - 1;
+                int right = Math.min((left + 2 * size - 1), (length - 1));
+                Fusion2(left, mid, mid + 1, right);
             }
         }
     }
