@@ -9,7 +9,7 @@ public class Principal {
     long tempoInicio, tempoFinal, timeInicio, timeFinal;
     Arquivo arqOrd, arqRev, arqRand, auxRev, auxRand, copia;
 
-    int tam = 50;
+    int tam = 1024;
     RandomAccessFile tabela;
 
     public void geraArquivos() throws IOException {
